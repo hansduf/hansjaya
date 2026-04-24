@@ -1,0 +1,70 @@
+/* ============================================
+   BERANDA.CSS — Styles khusus halaman Beranda
+   Hans Jaya Distribution
+   ============================================ */
+
+/* --- GOOGLE FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+/* --- TYPOGRAPHY --- */
+.font-serif { font-family: 'Playfair Display', serif; }
+.font-sans  { font-family: 'DM Sans', sans-serif; }
+
+/* --- SCROLL REVEAL --- */
+.reveal-up   { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+.reveal-fade { opacity: 0; transition: opacity 1s ease-out; will-change: opacity; }
+.visible     { opacity: 1; transform: translateY(0); }
+
+/* --- TRANSITION DELAYS --- */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+
+/* --- MARQUEE ANIMATION --- */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee       { display: flex; width: max-content; animation: marquee 35s linear infinite; }
+.animate-marquee:hover { animation-play-state: paused; }
+
+/* ============================================
+   DISTRIBUTION FLOW — SVG Animations
+   ============================================ */
+
+/* 1. Path Drawing */
+.path-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 2.5s ease-in-out;
+  will-change: stroke-dashoffset;
+}
+.flow-active .path-line.stage-1 { stroke-dashoffset: 0; transition-delay: 0.5s; }
+.flow-active .path-line.stage-2 { stroke-dashoffset: 0; transition-delay: 0.5s; }
+
+/* 2. Node Scaling */
+.flow-node {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: opacity, transform;
+}
+.flow-active .flow-node.stage-0 { opacity: 1; transform: scale(1); transition-delay: 0s; }
+.flow-active .flow-node.stage-1 { opacity: 1; transform: scale(1); transition-delay: 1.8s; }
+.flow-active .flow-node.stage-2 { opacity: 1; transform: scale(1); transition-delay: 3s; }
+
+/* 3. Moving Dots — Fade in setelah path tergambar */
+.moving-truck {
+  opacity: 0;
+  transition: opacity 1.5s ease-in;
+  will-change: transform;
+}
+.flow-active .moving-truck { opacity: 1; transition-delay: 1.5s; }
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar       { width: 8px; }
+::-webkit-scrollbar-track { background: #FDFAF3; }
+::-webkit-scrollbar-thumb { background: #C47A1E; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #E8A020; }
