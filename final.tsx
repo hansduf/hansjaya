@@ -1,16 +1,74 @@
 import { useEffect, useRef, useState } from 'react';
 import {
     Menu, X, Truck, Store, Utensils, Cake, ChefHat,
-    Package, Factory, CheckCircle, Clock, ShieldCheck,
+    Package, Factory, CheckCircle, Clock, Leaf, ShieldCheck,
     ChevronRight, MapPin, Phone, Mail, ArrowRight,
     ShoppingCart, Home, Users, Star
 } from 'lucide-react';
 
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { products, testimonials } from '../data/berandaData';
-import QualityAccordion, { qualityItems } from '../components/QualityAccordion';
-import '../styles/beranda.css';
 
+// --- DATA ---
+const products = [
+    { name: 'Telur Ayam Ras', desc: 'Pilihan premium cangkang coklat & putih, kaya nutrisi.', img: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&q=80', badge: 'Best Seller' },
+    { name: 'Telur Ayam Kampung', desc: 'Alami, kuning telur lebih padat dan gurih alami.', img: 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&q=80', badge: 'Tersedia' },
+    { name: 'Telur Bebek', desc: 'Ukuran besar, sempurna untuk bahan martabak & baking.', img: 'https://images.unsplash.com/photo-1569239856525-455c1bbf9169?auto=format&fit=crop&q=80', badge: 'Tersedia' },
+    { name: 'Telur Asin', desc: 'Masir dan gurih, diolah dari telur bebek pilihan terbaik.', img: 'https://images.unsplash.com/photo-1628205423871-3cda80277f28?auto=format&fit=crop&q=80', badge: 'Tersedia' },
+    { name: 'Telur Omega-3', desc: 'Diperkaya Omega-3, baik untuk perkembangan otak.', img: 'https://images.unsplash.com/photo-1627889158334-192e4cc3501f?auto=format&fit=crop&q=80', badge: 'Premium' },
+    { name: 'Telur Puyuh', desc: 'Segar dan higienis, cocok untuk sate atau sup pelengkap.', img: 'https://images.unsplash.com/photo-1607515099309-8d7d96a798aa?auto=format&fit=crop&q=80', badge: 'Tersedia' },
+];
+
+const testimonials = [
+    { quote: "Sejak bermitra dengan Hans Jaya, pasokan telur untuk restoran kami tidak pernah terlambat. Kualitasnya sangat konsisten.", name: "Budi Santoso", role: "Owner Restoran", city: "Surabaya" },
+    { quote: "Sangat membantu untuk program MBG. Telur selalu fresh dan ukurannya seragam, mempermudah perhitungan porsi kami.", name: "Siti Rahma", role: "Koordinator MBG", city: "Malang" },
+    { quote: "Untuk bakery, kuning telur yang bagus adalah kunci. Telur dari Hans Jaya selalu segar dan membuat kue kami mengembang sempurna.", name: "Chef Andreas", role: "Head Baker", city: "Sidoarjo" },
+    { quote: "Harga kompetitif dan pengiriman on-time. Mitra bisnis yang sangat bisa diandalkan untuk jangka panjang.", name: "Kusuma", role: "Grosir Bahan Pokok", city: "Pasuruan" }
+];
+
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function QualityAccordion({ item, index }: { item: any; index: number }) {
+    const [open, setOpen] = useState(index === 0);
+    const Icon = item.icon;
+    return (
+        <div
+            className={`rounded-2xl border transition-all duration-500 cursor-pointer overflow-hidden ${open ? 'border-[#E8A020]/40 bg-white shadow-lg' : 'border-gray-100 bg-white/60 hover:border-[#E8A020]/20 hover:bg-white'}`}
+            onClick={() => setOpen(!open)}
+        >
+            {/* Header row */}
+            <div className="flex items-center gap-4 p-4">
+                <div className={`w-10 h-10 shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 ${open ? 'bg-[#E8A020] text-white' : 'bg-[#E8A020]/10 text-[#C47A1E]'}`}>
+                    <Icon className="w-5 h-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                    <h4 className={`font-bold text-sm transition-colors ${open ? 'text-[#2C1A00]' : 'text-gray-700'}`}>{item.title}</h4>
+                    <p className="text-xs text-gray-400 truncate">{item.short}</p>
+                </div>
+                <div className={`w-5 h-5 shrink-0 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${open ? 'border-[#E8A020] bg-[#E8A020]' : 'border-gray-200'}`}>
+                    <svg className={`w-2.5 h-2.5 transition-transform duration-300 ${open ? 'rotate-180 text-white' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                </div>
+            </div>
+
+            {/* Expanded content */}
+            <div className={`transition-all duration-500 ease-in-out overflow-hidden ${open ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className="px-4 pb-5 pt-0 border-t border-gray-50">
+                    <p className="text-xs text-gray-500 leading-relaxed mt-3 mb-4">{item.detail}</p>
+                    {/* Animated progress bar */}
+                    <div className="flex items-center gap-3">
+                        <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div
+                                className="h-full bg-gradient-to-r from-[#E8A020] to-[#C47A1E] rounded-full transition-all duration-1000 ease-out"
+                                style={{ width: open ? `${item.stat}%` : '0%' }}
+                            />
+                        </div>
+                        <span className="text-xs font-black text-[#E8A020] shrink-0">{item.stat}%</span>
+                        <span className="text-xs text-gray-400 shrink-0 hidden sm:block">{item.statLabel}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default function Beranda() {
     useScrollReveal();
@@ -19,43 +77,6 @@ export default function Beranda() {
     const [flowInView, setFlowInView] = useState(false);
     const flowRef = useRef<HTMLDivElement>(null);
     const [activeTesti, setActiveTesti] = useState(0);
-
-    // Form State
-    const [formData, setFormData] = useState({
-        name: '',
-        businessType: 'Pilih Jenis Usaha',
-        city: '',
-        quantity: '',
-        message: ''
-    });
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSendMessage = (e?: React.FormEvent) => {
-        if (e) e.preventDefault();
-        
-        const { name, businessType, city, quantity, message } = formData;
-        
-        const waNumber = '628993179345'; // User's WhatsApp number
-        const text = `Halo Hans Jaya, saya ingin bertanya mengenai kemitraan distribusi telur.
-
-*Detail Informasi:*
-• Nama/Bisnis: ${name || '-'}
-• Jenis Usaha: ${businessType || '-'}
-• Kota: ${city || '-'}
-• Kebutuhan: ${quantity ? quantity + ' Peti/Minggu' : '-'}
-
-*Pesan:*
-${message || 'Saya tertarik untuk bekerja sama dengan Hans Jaya.'}
-
-Terima kasih.`;
-
-        const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
-        window.open(waUrl, '_blank');
-    };
 
     // Auto-rotate testimonials
     useEffect(() => {
@@ -86,6 +107,50 @@ Terima kasih.`;
 
     return (
         <div className="font-sans text-[#2C1A00] bg-[#FDFAF3] overflow-x-hidden selection:bg-[#E8A020] selection:text-white">
+            {/* GLOBAL STYLES & ANIMATIONS */}
+            <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+        
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'DM Sans', sans-serif; }
+
+        /* Scroll Reveal Base */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+        .reveal-fade { opacity: 0; transition: opacity 1s ease-out; will-change: opacity; }
+        .visible { opacity: 1; transform: translateY(0); }
+
+        /* Delays for grouped reveals */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Marquee Animation */
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { display: flex; width: max-content; animation: marquee 35s linear infinite; }
+        .animate-marquee:hover { animation-play-state: paused; }
+
+        /* --- DISTRIBUTION FLOW SVG ANIMATIONS --- */
+        /* 1. Path Drawing */
+        .path-line { stroke-dasharray: 1000; stroke-dashoffset: 1000; transition: stroke-dashoffset 2.5s ease-in-out; will-change: stroke-dashoffset; }
+        .flow-active .path-line.stage-1 { stroke-dashoffset: 0; transition-delay: 0.5s; }
+        .flow-active .path-line.stage-2 { stroke-dashoffset: 0; transition-delay: 0.5s; }
+        
+        /* 2. Node Scaling */
+        .flow-node { opacity: 0; transform: scale(0.5); transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: opacity, transform; }
+        .flow-active .flow-node.stage-0 { opacity: 1; transform: scale(1); transition-delay: 0s; }
+        .flow-active .flow-node.stage-1 { opacity: 1; transform: scale(1); transition-delay: 1.8s; }
+        .flow-active .flow-node.stage-2 { opacity: 1; transform: scale(1); transition-delay: 3s; }
+
+        /* 3. Moving Trucks (Dots) - Fade in after paths are drawn */
+        .moving-truck { opacity: 0; transition: opacity 1.5s ease-in; will-change: transform; }
+        .flow-active .moving-truck { opacity: 1; transition-delay: 1.5s; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FDFAF3; }
+        ::-webkit-scrollbar-thumb { background: #C47A1E; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #E8A020; }
+      `}</style>
 
             {/* NAVBAR */}
             <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
@@ -142,10 +207,10 @@ Terima kasih.`;
                             Distributor Telur Terpercaya
                         </div>
                         <h1 className="font-serif text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-6">
-                            Kesegaran Nyata <span className="text-[#E8A020]">Setiap Hari</span>,<br />Langsung dari <span className="text-[#E8A020]">Kandang</span>.
+                            Dari Kandang <span className="text-[#E8A020]">Terbaik</span>,<br />ke Meja <span className="text-[#E8A020]">Terbaik</span>.
                         </h1>
                         <p className="text-lg md:text-xl text-white/80 font-light mb-10 leading-relaxed max-w-xl">
-                            Mitra distribusi telur terpercaya di Ponorogo & Sekitarnya selama lebih dari 20 tahun. Menyuplai kebutuhan harian restoran, grosir, hingga industri pangan.
+                            Mitra distribusi telur segar untuk restoran, program Makan Bergizi Gratis (MBG), grosir, pusat baking, dan industri pangan.
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <a href="#contact" className="bg-[#E8A020] hover:bg-[#C47A1E] text-white px-8 py-4 rounded-full font-semibold transition-all flex items-center gap-2">
@@ -167,18 +232,18 @@ Terima kasih.`;
                     <div className="lg:col-span-4 relative z-20 reveal-up">
                         <h2 className="text-[#E8A020] font-bold tracking-wider uppercase text-sm mb-3">Tentang & Jaringan</h2>
                         <h3 className="font-serif text-4xl lg:text-5xl font-bold mb-6 text-[#2C1A00] leading-tight">
-                            Dua Dekade Menjaga <span className="text-[#E8A020]">Kualitas</span>.
+                            Akar Kemajuan<br/>Bisnis Anda.
                         </h3>
                         <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                            Berpusat di Ponorogo, Hans Jaya telah mendedikasikan diri selama lebih dari 20 tahun untuk menyalurkan telur segar langsung dari kandang. Jaringan kami kini menjangkau Madiun, Ngawi, Tulungagung, Trenggalek, hingga Purwantoro dengan integritas tinggi.
+                            Hans Jaya tumbuh dari sebuah komitmen kuat: menyalurkan kesegaran terbaik ke seluruh pelosok bisnis. Jaringan distribusi kami mengakar kuat, terintegrasi layaknya pohon besar yang terus menyuplai energi harian ke ratusan mitra dengan presisi tinggi.
                         </p>
                         
                         <div className="grid grid-cols-2 gap-4 mb-8">
                             {[
                                 { label: 'Mitra Klien', value: '500+', icon: Store },
                                 { label: 'Ton/Bulan', value: '120+', icon: Package },
-                                { label: 'Wilayah Jangkauan', value: 'Ponorogo+', icon: MapPin },
-                                { label: 'Tahun Pengalaman', value: '20+', icon: Clock }
+                                { label: 'Kota', value: '15+', icon: MapPin },
+                                { label: 'Tahun', value: '2010', icon: Clock }
                             ].map((stat, i) => (
                                 <div key={i} className="bg-white p-5 rounded-2xl border border-[#E8A020]/10 shadow-sm hover:shadow-xl transition-shadow group">
                                     <stat.icon className="text-[#E8A020] mb-3 group-hover:scale-110 transition-transform" size={24} />
@@ -323,21 +388,21 @@ Terima kasih.`;
                         </a>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {products.map((item, i) => (
                             <div key={i} className="reveal-up group rounded-2xl overflow-hidden bg-[#FDFAF3] border border-gray-100 hover:shadow-2xl transition-all duration-500" style={{ transitionDelay: `${i * 100}ms` }}>
-                                <div className="relative h-32 sm:h-48 md:h-64 overflow-hidden">
-                                    <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 bg-white/90 backdrop-blur px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs font-bold text-[#C47A1E] shadow-sm">
+                                <div className="relative h-64 overflow-hidden">
+                                    <div className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-[#C47A1E] shadow-sm">
                                         {item.badge}
                                     </div>
                                     <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
                                 </div>
-                                <div className="p-3 sm:p-6 relative">
-                                    <h4 className="font-serif text-base sm:text-2xl font-bold text-[#2C1A00] mb-1 sm:mb-2 truncate sm:whitespace-normal">{item.name}</h4>
-                                    <p className="text-gray-600 text-[10px] sm:text-sm mb-3 sm:mb-6 line-clamp-1 sm:line-clamp-2">{item.desc}</p>
-                                    <button className="w-full py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-white border sm:border-2 border-[#E8A020] text-[#C47A1E] text-xs sm:text-sm font-bold group-hover:bg-[#E8A020] group-hover:text-white transition-colors">
-                                        Cek Stok
+                                <div className="p-6 relative">
+                                    <h4 className="font-serif text-2xl font-bold text-[#2C1A00] mb-2">{item.name}</h4>
+                                    <p className="text-gray-600 mb-6 line-clamp-2">{item.desc}</p>
+                                    <button className="w-full py-3 rounded-xl bg-white border-2 border-[#E8A020] text-[#C47A1E] font-bold group-hover:bg-[#E8A020] group-hover:text-white transition-colors">
+                                        Cek Ketersediaan
                                     </button>
                                 </div>
                             </div>
@@ -369,32 +434,65 @@ Terima kasih.`;
                         {/* LEFT — Image with floating stats */}
                         <div className="relative reveal-fade order-2 lg:order-1">
                             {/* Gold offset frame */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-[#E8A020] to-[#C47A1E] lg:translate-x-3 lg:translate-y-3 rounded-3xl opacity-30" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#E8A020] to-[#C47A1E] translate-x-3 translate-y-3 rounded-3xl opacity-30" />
                             <img
                                 src="https://images.unsplash.com/photo-1548550023-2bf3c49b338c?auto=format&fit=crop&q=80&w=1000"
                                 alt="Fasilitas Kandang Modern Hans Jaya"
                                 className="relative z-10 w-full h-[420px] object-cover rounded-3xl shadow-2xl"
                             />
                             {/* Floating stat cards */}
-                            <div className="absolute z-20 bottom-4 left-4 sm:bottom-6 sm:left-6 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-3 sm:gap-4 border border-white">
-                                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#E8A020]/10 rounded-xl flex items-center justify-center shrink-0">
-                                    <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-[#E8A020]" />
+                            <div className="absolute z-20 bottom-6 left-6 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl px-5 py-4 flex items-center gap-4 border border-white">
+                                <div className="w-10 h-10 bg-[#E8A020]/10 rounded-xl flex items-center justify-center shrink-0">
+                                    <ShieldCheck className="w-5 h-5 text-[#E8A020]" />
                                 </div>
-                                <div className="min-w-0">
-                                    <p className="font-black font-serif text-xl sm:text-2xl text-[#2C1A00] leading-none">99.8%</p>
-                                    <p className="text-[10px] sm:text-xs text-gray-500 mt-0.5 truncate">Tingkat Lulus QC</p>
+                                <div>
+                                    <p className="font-black font-serif text-2xl text-[#2C1A00] leading-none">99.8%</p>
+                                    <p className="text-xs text-gray-500 mt-0.5">Tingkat Kelulusan QC</p>
                                 </div>
                             </div>
-                            <div className="absolute z-20 top-4 right-4 sm:top-6 sm:right-6 bg-[#2C1A00]/90 backdrop-blur-sm rounded-2xl shadow-xl px-3 py-2 sm:px-4 sm:py-3 text-white border border-white/10 text-right">
-                                <p className="text-[10px] text-white/60 uppercase tracking-wider font-bold mb-0.5">Panen Harian</p>
-                                <p className="font-black font-serif text-lg sm:text-xl leading-none">50.000+</p>
-                                <p className="text-[10px] text-[#E8A020] mt-0.5">butir / hari</p>
+                            <div className="absolute z-20 top-6 right-6 bg-[#2C1A00]/90 backdrop-blur-sm rounded-2xl shadow-xl px-4 py-3 text-white border border-white/10">
+                                <p className="text-xs text-white/60 uppercase tracking-wider font-bold mb-1">Panen Harian</p>
+                                <p className="font-black font-serif text-xl leading-none">50.000+</p>
+                                <p className="text-xs text-[#E8A020] mt-0.5">butir/hari</p>
                             </div>
                         </div>
 
                         {/* RIGHT — Interactive accordion */}
                         <div className="order-1 lg:order-2 reveal-up space-y-3">
-                            {qualityItems.map((item, i) => (
+                            {[
+                                {
+                                    icon: Clock,
+                                    title: 'Segar Setiap Hari',
+                                    short: 'Panen & distribusi di hari yang sama',
+                                    detail: 'Proses panen dilakukan setiap pagi mulai pukul 04.00 WIB. Telur langsung masuk jalur sortir tanpa melewati cold storage, memastikan kesegaran optimal saat tiba di tangan mitra.',
+                                    stat: 95,
+                                    statLabel: 'Ketepatan jadwal panen'
+                                },
+                                {
+                                    icon: ShieldCheck,
+                                    title: 'Tersortir & Terseleksi',
+                                    short: 'Standar sortir bentuk, ukuran & cangkang',
+                                    detail: 'Setiap butir melewati 3 tahap seleksi: visual manual, sortir mesin berdasarkan berat, dan uji lampu UV untuk mendeteksi retak micro. Hanya telur grade-A yang lolos ke distribusi.',
+                                    stat: 99,
+                                    statLabel: 'Lolos seleksi grade-A'
+                                },
+                                {
+                                    icon: Leaf,
+                                    title: 'Higienitas Terjamin',
+                                    short: 'Pembersihan standar industri pangan',
+                                    detail: 'Kandang dibersihkan dengan disinfektan food-grade dua kali sehari. Pekerja wajib menggunakan APD lengkap dan melewati protokol sanitasi sebelum memasuki area produksi.',
+                                    stat: 100,
+                                    statLabel: 'Kepatuhan protokol sanitasi'
+                                },
+                                {
+                                    icon: Truck,
+                                    title: 'On-Time Delivery',
+                                    short: 'Armada khusus menjaga keamanan telur',
+                                    detail: 'Armada pengiriman dilengkapi rak khusus anti-goncangan dan sistem tracking real-time. SLA pengiriman 99% on-time dalam radius 150 km dari pusat distribusi.',
+                                    stat: 99,
+                                    statLabel: 'On-time delivery rate'
+                                },
+                            ].map((item, i) => (
                                 <QualityAccordion key={i} item={item} index={i} />
                             ))}
                         </div>
@@ -517,9 +615,9 @@ Terima kasih.`;
                             {/* Contact Cards */}
                             <div className="grid grid-cols-2 gap-3">
                                 {[
-                                    { icon: Phone, label: 'WhatsApp', value: '+62 899-3179-345' },
+                                    { icon: Phone, label: 'WhatsApp', value: '+62 812-3456-7890' },
                                     { icon: Mail, label: 'Email', value: 'mitra@hansjaya.com' },
-                                    { icon: MapPin, label: 'Lokasi', value: 'Ponorogo, Jawa Timur' },
+                                    { icon: MapPin, label: 'Lokasi', value: 'Jawa Timur' },
                                     { icon: Clock, label: 'Operasional', value: 'Sen–Sab 04–17 WIB' },
                                 ].map(({ icon: Icon, label, value }) => (
                                     <div key={label} className="rounded-xl border border-[#E8A020]/20 bg-white p-3 shadow-sm hover:shadow-md hover:border-[#E8A020]/40 transition-all duration-200">
@@ -533,27 +631,15 @@ Terima kasih.`;
 
                         {/* RIGHT — Form */}
                         <div className="lg:col-span-3 bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
-                            <form className="space-y-4" onSubmit={handleSendMessage}>
+                            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">Nama / Bisnis</label>
-                                        <input 
-                                            type="text" 
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all" 
-                                            placeholder="Budi / Resto Budi" 
-                                        />
+                                        <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all" placeholder="Budi / Resto Budi" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">Jenis Usaha</label>
-                                        <select 
-                                            name="businessType"
-                                            value={formData.businessType}
-                                            onChange={handleInputChange}
-                                            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all text-gray-600"
-                                        >
+                                        <select className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all text-gray-600">
                                             <option>Pilih Jenis Usaha</option>
                                             <option>Restoran / Kafe</option>
                                             <option>Program MBG</option>
@@ -569,49 +655,27 @@ Terima kasih.`;
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">Kota</label>
-                                        <input 
-                                            type="text" 
-                                            name="city"
-                                            value={formData.city}
-                                            onChange={handleInputChange}
-                                            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all" 
-                                            placeholder="Kota domisili" 
-                                        />
+                                        <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all" placeholder="Kota domisili" />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">Kebutuhan (Peti/Minggu)</label>
-                                        <input 
-                                            type="number" 
-                                            name="quantity"
-                                            value={formData.quantity}
-                                            onChange={handleInputChange}
-                                            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all" 
-                                            placeholder="Est. jumlah" 
-                                        />
+                                        <input type="number" className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all" placeholder="Est. jumlah" />
                                     </div>
                                 </div>
 
                                 <div>
                                     <label className="block text-xs font-bold text-gray-600 mb-1.5 uppercase tracking-wide">Pesan Tambahan</label>
-                                    <textarea 
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleInputChange}
-                                        rows={3} 
-                                        className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all resize-none" 
-                                        placeholder="Tulis pesan Anda..."
-                                    ></textarea>
+                                    <textarea rows={3} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#E8A020] focus:ring-1 focus:ring-[#E8A020] transition-all resize-none" placeholder="Tulis pesan Anda..."></textarea>
                                 </div>
 
-                                <div className="pt-2">
-                                    <button 
-                                        type="submit"
-                                        className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white px-8 py-4 rounded-xl text-base font-bold transition-all shadow-lg shadow-[#25D366]/20 flex items-center justify-center gap-3 group"
-                                    >
-                                        <svg className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z" /></svg>
-                                        Kirim via WhatsApp
+                                <div className="flex flex-wrap gap-3 pt-2">
+                                    <button type="submit" className="flex-1 sm:flex-none bg-[#2C1A00] hover:bg-black text-white px-6 py-2.5 rounded-lg text-sm font-bold transition-colors shadow-md shadow-black/10">
+                                        Kirim Pesan
                                     </button>
-                                    <p className="text-center text-[10px] text-gray-400 mt-3">Pesanan Anda akan diteruskan langsung ke WhatsApp kami.</p>
+                                    <button type="button" className="flex-1 sm:flex-none bg-[#25D366] hover:bg-[#20bd5a] text-white px-6 py-2.5 rounded-lg text-sm font-bold transition-colors shadow-md shadow-[#25D366]/20 flex items-center justify-center gap-2">
+                                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z" /></svg>
+                                        WhatsApp
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -633,7 +697,7 @@ Terima kasih.`;
                         {[
                             { value: '500+', label: 'Mitra Aktif' },
                             { value: '50 Ton', label: 'Distribusi/Bulan' },
-                            { value: '20+', label: 'Tahun Pengalaman' },
+                            { value: '10+', label: 'Tahun Pengalaman' },
                             { value: '99%', label: 'On-Time Delivery' },
                         ].map(({ value, label }) => (
                             <div key={label} className="text-center">
