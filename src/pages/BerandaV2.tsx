@@ -5,6 +5,7 @@ import {
     TrendingUp, TrendingDown, Minus, ShieldCheck, Leaf, Truck
 } from 'lucide-react';
 import '../styles/berandaNeo.css';
+import Logo from '../components/Logo';
 
 import imgAyamRas from '../assets/te;ur ayam ras1.png';
 import imgAsin from '../assets/telur asin1.png';
@@ -48,9 +49,7 @@ const MegaFooter = () => {
                 {/* Brand & Tagline - col-span-5 */}
                 <div className="p-8 md:p-12 md:col-span-5 flex flex-col justify-between">
                     <div>
-                        <span className="font-grotesk font-black text-6xl lg:text-7xl uppercase tracking-tighter block leading-[0.85] mb-6">
-                            HANS<br />JAYA<span className="text-[#FFC300]">.</span>
-                        </span>
+                        <Logo className="text-6xl lg:text-7xl mb-6" dark={true} />
                         <h3 className="text-lg lg:text-xl font-bold uppercase tracking-widest text-[#FFC300] mb-3">Mengapa Kami Nomor #1 di Ponorogo</h3>
                         <p className="text-sm font-medium text-[#FAFAFA]/70 leading-relaxed max-w-md italic border-l-2 border-[#FFC300] pl-4">
                             "Kepercayaan mitra adalah kunci keberhasilan Hans Jaya selama lebih dari dua dekade."
@@ -280,7 +279,7 @@ export default function BerandaV2() {
                 <div className="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-[#1A1A1A]">
                     {/* Brand */}
                     <div className="md:col-span-3 p-4 flex items-center justify-between">
-                        <span className="font-grotesk font-black text-2xl uppercase tracking-tighter">HANS JAYA<span className="text-[#FF3300]">.</span></span>
+                        <Logo className="text-xl md:text-2xl" dark={false} />
                     </div>
                     {/* Links */}
                     <div className="hidden md:col-span-6 md:grid grid-cols-4 divide-x divide-[#1A1A1A] text-xs font-bold uppercase tracking-widest text-center">
