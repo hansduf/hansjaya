@@ -1,0 +1,89 @@
+/* ============================================
+   BERANDA NEO.CSS — Swiss Typographic / Neobrutalism
+   Hans Jaya Distribution
+   ============================================ */
+
+/* Import Google Fonts for strict, geometric look */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+.font-sans {
+    font-family: 'Inter', sans-serif;
+}
+
+.font-grotesk {
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom Selection */
+::selection {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Scrollbar styling for that sharp databoard vibe */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #FAFAFA;
+    border-left: 1px solid #1A1A1A;
+}
+::-webkit-scrollbar-thumb {
+    background: #1A1A1A;
+    border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #4A4A4A;
+}
+
+/* Base utility for sharp borders */
+.border-grid {
+    border-color: #1A1A1A;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 25s linear infinite;
+}
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+/* Hover Effects */
+.neo-hover:hover {
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+}
+
+.neo-hover-invert:hover {
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+}
+
+/* Hide spin buttons in number inputs */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+/* Line Animation for SVG */
+.animate-dash {
+    animation: dashAnim 20s linear infinite;
+}
+@keyframes dashAnim {
+    to {
+        stroke-dashoffset: -1000;
+    }
+}
