@@ -401,7 +401,11 @@ export default function BerandaV2() {
                         <div className="mt-8 border border-white/20 p-4">
                             <span className="block text-[10px] font-mono text-[#FFC300] mb-1 uppercase">Update Terakhir</span>
                             <span className="font-mono text-sm">
-                                {eggPrices.length > 0 ? new Date(eggPrices[0]?.updated_at).toLocaleString('id-ID') : 'MEMUAT DATA...'}
+                                {eggPrices.length > 0 ? (() => {
+                                    const timestamps = eggPrices.map(item => new Date(item.updated_at).getTime());
+                                    const latestTimestamp = Math.max(...timestamps);
+                                    return new Date(latestTimestamp).toLocaleString('id-ID');
+                                })() : 'MEMUAT DATA...'}
                             </span>
                         </div>
                     </div>
