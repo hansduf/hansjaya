@@ -72,9 +72,10 @@ const MegaFooter = () => {
                     <div className="mt-8">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFC300] mb-4 block">Kantor & Distribusi</span>
                         <p className="text-sm font-mono text-[#FAFAFA] leading-relaxed">
-                            Jl. Raya Ponorogo - Madiun,<br />
-                            Jawa Timur<br />
-                            <a href="tel:+628993179345" className="text-[#FFC300] hover:underline mt-2 inline-block font-bold">📞 +62 899-3179-345</a>
+                            Jl. Sidorejo 7, Gupolo,<br />
+                            Kec. Babadan, Kabupaten Ponorogo,<br />
+                            Jawa Timur 63491<br />
+                            <a href="tel:+628993179345" className="text-[#FFC300] hover:underline mt-2 inline-block font-bold">📞 +62 899-3179-345 (FARHAN)</a>
                         </p>
                     </div>
                 </div>
@@ -644,7 +645,7 @@ export default function BerandaV2() {
                     {/* Form Left */}
                     <div className="lg:col-span-7 p-6 lg:p-8 bg-[#FFC300] text-[#1A1A1A]">
                         <h2 className="font-grotesk font-black text-4xl lg:text-5xl uppercase tracking-tighter mb-2">Mulai Kemitraan</h2>
-                        <p className="font-mono text-xs font-bold uppercase tracking-widest mb-8 text-[#1A1A1A]/70">Dapatkan harga pabrik untuk bisnis Anda.</p>
+                        <p className="font-mono text-xs font-bold uppercase tracking-widest mb-8 text-[#1A1A1A]/70">Dapatkan harga kandang untuk bisnis Anda.</p>
 
                         <form onSubmit={handleSendMessage} className="space-y-6">
                             <div className="space-y-2">

@@ -2,32 +2,32 @@
   <!-- Rounded solid dark charcoal background for maximum visibility in both light and dark browser themes -->
   <rect width="100" height="100" rx="16" fill="#1A1A1A" />
   
-  <!-- "HANS" Text -->
-  <text 
-    x="50" 
-    y="41" 
-    dominant-baseline="middle" 
-    text-anchor="middle" 
-    font-family="system-ui, -apple-system, sans-serif" 
-    font-weight="900" 
-    font-size="33" 
-    fill="#FAFAFA" 
-    letter-spacing="-1.5"
-  >HANS</text>
-  
-  <!-- "JAYA" Text -->
-  <text 
-    x="42" 
-    y="76" 
-    dominant-baseline="middle" 
-    text-anchor="middle" 
-    font-family="system-ui, -apple-system, sans-serif" 
-    font-weight="900" 
-    font-size="33" 
-    fill="#FAFAFA" 
-    letter-spacing="-1.5"
-  >JAYA</text>
+  <g fill="#FAFAFA">
+    <!-- "H" Path -->
+    <path d="M 10 14 h 4.5 v 11.5 h 7 v -11.5 h 4.5 v 30 h -4.5 v -14 h -7 v 14 h -4.5 z" />
+    
+    <!-- "A" Path (First Line) -->
+    <path d="M 30 44 L 35 14 h 6 L 46 44 h -4.5 L 39.5 32 h -3 L 34.5 44 z M 37.2 23.5 h 3.6 v 4.5 h -3.6 z" />
+    
+    <!-- "N" Path -->
+    <path d="M 50 14 h 4.2 L 62 38.5 v -24.5 h 4 v 30 h -4.2 L 54 19.5 v 24.5 h -4 z" />
+    
+    <!-- "S" Path -->
+    <path d="M 70 18 h 4.5 v -4 h 11.5 v 10 h -11.5 v 4 h 11.5 v 16 h -16 v -4 h 11.5 v -8 h -11.5 v -14 z" />
+    
+    <!-- "J" Path -->
+    <path d="M 10 74 h 4 v 4 h 6 v -26 h 4 v 30 h -14 z" />
+    
+    <!-- "A" Path (Second Line) -->
+    <path d="M 28 82 L 33 52 h 6 L 44 82 h -4.5 L 37.5 70 h -3 L 32.5 82 z M 35.2 61.5 h 3.6 v 4.5 h -3.6 z" />
+    
+    <!-- "Y" Path -->
+    <path d="M 47 52 h 4.5 l 3.5 10.5 l 3.5 -10.5 h 4.5 L 57 67 v 15 h -4 v -15 z" />
+    
+    <!-- "A" Path (Third Line) -->
+    <path d="M 64 82 L 69 52 h 6 L 80 82 h -4.5 L 73.5 70 h -3 L 68.5 82 z M 71.2 61.5 h 3.6 v 4.5 h -3.6 z" />
+  </g>
   
   <!-- Hans Jaya Golden Egg Yolk Dot -->
-  <circle cx="82" cy="72" r="7" fill="#FFC300" />
+  <circle cx="87" cy="76" r="6" fill="#FFC300" />
 </svg>
