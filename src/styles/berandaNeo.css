@@ -3,8 +3,7 @@
    Hans Jaya Distribution
    ============================================ */
 
-/* Import Google Fonts for strict, geometric look */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* Loaded asynchronously via index.html to prevent render-blocking styles */
 
 .font-sans {
     font-family: 'Inter', sans-serif;

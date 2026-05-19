@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import {
     ArrowRight, CheckCircle, Package,
     TrendingUp, TrendingDown, Minus, ShieldCheck, Leaf, Truck
@@ -7,21 +6,30 @@ import {
 import '../styles/berandaNeo.css';
 import Logo from '../components/Logo';
 
-import imgAyamRas from '../assets/te;ur ayam ras1.png';
-import imgAsin from '../assets/telur asin1.png';
-import imgKampung from '../assets/telur ayam kampung1.png';
-import imgBebek from '../assets/telur bebek1.png';
-import imgOmega from '../assets/telur omega1.png';
-import imgPuyuh from '../assets/telur puyuh1.png';
-import imgKandang1 from '../assets/kandang1.png';
-import imgKandang2 from '../assets/kandang2.png';
+import imgAyamRas from '../assets/telur ayam ras1.webp';
+import imgAsin from '../assets/telur asin1.webp';
+import imgKampung from '../assets/telur ayam kampung1.webp';
+import imgBebek from '../assets/telur bebek1.webp';
+import imgOmega from '../assets/telur omega1.webp';
+import imgPuyuh from '../assets/telur puyuh1.webp';
+import imgKandang2 from '../assets/kandang2.webp';
 
 const MegaFooter = () => {
     const footerRef = useRef<HTMLElement>(null);
+    const rectRef = useRef<DOMRect | null>(null);
+
+    const handleMouseEnter = () => {
+        if (footerRef.current) {
+            rectRef.current = footerRef.current.getBoundingClientRect();
+        }
+    };
 
     const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
         if (!footerRef.current) return;
-        const rect = footerRef.current.getBoundingClientRect();
+        if (!rectRef.current) {
+            rectRef.current = footerRef.current.getBoundingClientRect();
+        }
+        const rect = rectRef.current;
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         footerRef.current.style.setProperty('--mouse-x', `${x}px`);
@@ -32,6 +40,7 @@ const MegaFooter = () => {
         <footer
             ref={footerRef}
             className="relative bg-[#1A1A1A] text-[#FAFAFA] border-t-8 border-[#FFC300] overflow-hidden"
+            onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
         >
             {/* Interactive Grid Background */}
@@ -230,10 +239,6 @@ const NeoDistributionSVG = () => (
     </div>
 );
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://qartwfvhpcooiskaeufz.supabase.co';
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_opGXI5QjLL4iWN4G3-f5gA_Ycc9ddJK';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 export default function BerandaV2() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [eggPrices, setEggPrices] = useState<any[]>([]);
@@ -241,6 +246,12 @@ export default function BerandaV2() {
     useEffect(() => {
         const fetchPrices = async () => {
             try {
+                // Defer loading Supabase client to speed up initial FCP
+                const { createClient } = await import('@supabase/supabase-js');
+                const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://qartwfvhpcooiskaeufz.supabase.co';
+                const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_opGXI5QjLL4iWN4G3-f5gA_Ycc9ddJK';
+                const supabase = createClient(supabaseUrl, supabaseKey);
+
                 const { data, error } = await supabase
                     .from('egg_prices')
                     .select('*')
@@ -335,8 +346,10 @@ export default function BerandaV2() {
                         <div className="bg-[#1A1A1A] relative overflow-hidden group p-6 lg:p-8 flex flex-col justify-between min-h-[240px]">
                             {/* Background Images with Hover Swap */}
                             <img
-                                src={imgKandang1}
+                                src="/kandang1.webp"
                                 alt="Kandang Hans Jaya"
+                                width="800"
+                                height="450"
                                 className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:opacity-0 transition-all duration-700 object-center"
                                 fetchPriority="high"
                                 decoding="async"
@@ -344,6 +357,8 @@ export default function BerandaV2() {
                             <img
                                 src={imgKandang2}
                                 alt="Fasilitas Hans Jaya"
+                                width="800"
+                                height="450"
                                 className="absolute inset-0 w-full h-full object-cover opacity-0 grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 object-center"
                                 loading="lazy"
                                 decoding="async"
@@ -500,6 +515,8 @@ export default function BerandaV2() {
                                     <img 
                                         src={prod.img} 
                                         alt={prod.name} 
+                                        width="500"
+                                        height="281"
                                         className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
                                         loading="lazy"
                                         decoding="async"
