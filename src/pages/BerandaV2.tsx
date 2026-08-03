@@ -463,7 +463,7 @@ export default function BerandaV2() {
                                                 <div className="flex items-center justify-end gap-1.5 mt-0.5">
                                                     {/* Badge Marketing Eksklusif - Miring/Slanted & Italic */}
                                                     <span className="bg-[#FFC300] text-[#1A1A1A] text-[7px] md:text-[8px] font-black italic -skew-x-6 px-1.5 py-0.5 uppercase tracking-wider border border-[#1A1A1A] shadow-[1px_1px_0px_#1A1A1A] group-hover:bg-white group-hover:text-[#FF3300] group-hover:border-white transition-all">
-                                                        HARGA KHUSUS
+                                                        UPDATE PASAR
                                                     </span>
                                                     <span className="font-grotesk font-black italic text-lg md:text-2xl text-[#1A1A1A] group-hover:text-[#FFC300] transition-colors tracking-tighter leading-none">
                                                         {formatRupiah(partnerPrice)}
