@@ -106,7 +106,7 @@ const MegaFooter = () => {
                     </div>
                     <div className="mt-12 pt-6 border-t border-white/20">
                         <div className="text-[10px] font-mono text-[#FAFAFA]/50 uppercase font-bold leading-relaxed">
-                            © {new Date().getFullYear()} HANS JAYA LOGISTICS<br />ALL RIGHTS RESERVED.
+                            © {new Date().getFullYear()} HANS JAYA LOGISTICS — PUSAT TELUR JAYA ABADI.<br />ALL RIGHTS RESERVED.
                         </div>
                     </div>
                 </div>
@@ -328,7 +328,7 @@ export default function BerandaV2() {
                     {/* Left Typography Area */}
                     <div className="lg:col-span-7 p-6 lg:p-12 xl:p-16 flex flex-col justify-center bg-[#FAFAFA]">
                         <div className="inline-block border border-[#1A1A1A] px-3 py-1 text-[10px] font-bold uppercase tracking-widest mb-6 self-start bg-[#FFC300] text-[#1A1A1A]">
-                            Distributor Telur Terpercaya di Ponorogo
+                            PUSAT TELUR JAYA ABADI — HANS JAYA PONOROGO
                         </div>
                         <h1 className="font-grotesk font-black text-5xl md:text-7xl xl:text-8xl uppercase tracking-tighter leading-[0.85] mb-8">
                             KUALITAS &<br />
