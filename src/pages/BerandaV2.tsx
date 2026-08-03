@@ -61,7 +61,7 @@ const MegaFooter = () => {
                         <Logo className="text-6xl lg:text-7xl mb-6" dark={true} />
                         <h3 className="text-lg lg:text-xl font-bold uppercase tracking-widest text-[#FFC300] mb-3">Mengapa Kami Nomor #1 di Ponorogo</h3>
                         <p className="text-sm font-medium text-[#FAFAFA]/70 leading-relaxed max-w-md italic border-l-2 border-[#FFC300] pl-4">
-                            "Kepercayaan mitra adalah kunci keberhasilan Hans Jaya selama lebih dari dua dekade."
+                            "Kepercayaan mitra adalah kunci keberhasilan Hans Jaya sejak 1999."
                         </p>
                     </div>
                     <div className="mt-12 text-xs font-mono text-[#FAFAFA]/50 uppercase">
@@ -313,7 +313,7 @@ export default function BerandaV2() {
             {/* MARQUEE TICKER */}
             <div className="border-b border-[#1A1A1A] bg-[#E8E8E8] overflow-hidden whitespace-nowrap py-2 text-[10px] font-bold uppercase tracking-widest text-[#1A1A1A]">
                 <div className="animate-marquee gap-8">
-                    {Array(10).fill("DISTRIBUSI TELUR HANS JAYA — PONOROGO, ID — SEJAK 2004 — KONTROL KUALITAS: AKTIF — LOGISTIK: ONLINE").map((text, i) => (
+                    {Array(10).fill("DISTRIBUSI TELUR HANS JAYA — PONOROGO, ID — SEJAK 1999 — KONTROL KUALITAS: AKTIF — LOGISTIK: ONLINE").map((text, i) => (
                         <span key={i} className="flex items-center gap-4">
                             {text} <span className="w-2 h-2 bg-[#FFC300] rounded-none inline-block animate-pulse"></span>
                         </span>
@@ -336,7 +336,7 @@ export default function BerandaV2() {
                             <span className="text-transparent" style={{ WebkitTextStroke: '2px #1A1A1A' }}>TERBAIK HARI INI.</span>
                         </h1>
                         <p className="font-medium text-base md:text-lg max-w-md leading-relaxed border-l-2 border-[#FFC300] pl-4">
-                            Mitra distribusi telur terpercaya di Ponorogo & Sekitarnya selama lebih dari 20 tahun. Menyuplai kebutuhan harian restoran, grosir, hingga industri pangan.
+                            Mitra distribusi telur terpercaya di Ponorogo & Sekitarnya selama lebih dari 25 tahun. Menyuplai kebutuhan harian restoran, grosir, hingga industri pangan.
                         </p>
                     </div>
 
@@ -370,7 +370,7 @@ export default function BerandaV2() {
                                 <span className="bg-[#FFC300] text-[#1A1A1A] px-2 py-1">Ponorogo, ID</span>
                             </div>
                             <div className="relative z-10 mt-auto pt-16">
-                                <h2 className="font-grotesk font-black text-4xl lg:text-5xl xl:text-6xl text-white uppercase tracking-tighter mb-1 drop-shadow-lg">20+ Tahun</h2>
+                                <h2 className="font-grotesk font-black text-4xl lg:text-5xl xl:text-6xl text-white uppercase tracking-tighter mb-1 drop-shadow-lg">25+ Tahun</h2>
                                 <p className="text-[#FFC300] font-bold text-[10px] lg:text-xs uppercase tracking-widest drop-shadow-md">Berdedikasi Menjaga Kualitas</p>
                             </div>
                         </div>
@@ -545,7 +545,7 @@ export default function BerandaV2() {
                                 { label: 'Mitra Klien', value: '500+' },
                                 { label: 'Ton/Bulan', value: '10+' },
                                 { label: 'Wilayah Jangkauan', value: 'Ponorogo+' },
-                                { label: 'Tahun Pengalaman', value: '20+' },
+                                { label: 'Tahun Pengalaman', value: '25+' },
                             ].map((stat, i) => (
                                 <div key={i} className={`p-6 lg:p-10 flex flex-col justify-end hover:bg-[#1A1A1A] hover:text-white transition-colors group overflow-hidden
                                     ${i < 2 ? 'border-t-0' : ''}
@@ -571,9 +571,9 @@ export default function BerandaV2() {
                     <div className="p-0 flex flex-col justify-between">
                         <div className="p-8 lg:p-12 border-b border-[#1A1A1A]">
                             <h2 className="font-grotesk font-black text-4xl lg:text-5xl uppercase tracking-tighter mb-4">Tentang & Jaringan</h2>
-                            <p className="text-sm font-bold uppercase tracking-wide text-[#FFC300] mb-2">Dua Dekade Menjaga Kualitas.</p>
+                            <p className="text-sm font-bold uppercase tracking-wide text-[#FFC300] mb-2">Berdedikasi Sejak 1999 Menjaga Kualitas.</p>
                             <p className="text-sm leading-relaxed max-w-md mb-8">
-                                Berpusat di Ponorogo, Hans Jaya telah mendedikasikan diri selama lebih dari 20 tahun untuk menyalurkan telur segar langsung dari kandang. Jaringan kami kini menjangkau Madiun, Ngawi, Tulungagung, Trenggalek, hingga Purwantoro dengan integritas tinggi.
+                                Berpusat di Ponorogo, Hans Jaya telah mendedikasikan diri selama lebih dari 25 tahun untuk menyalurkan telur segar langsung dari kandang. Jaringan kami kini menjangkau Madiun, Ngawi, Tulungagung, Trenggalek, hingga Purwantoro dengan integritas tinggi.
                             </p>
 
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-[#1A1A1A]/20">
@@ -635,7 +635,7 @@ export default function BerandaV2() {
                                 {
                                     title: "Distribusi Tercepat",
                                     sub: "Menjangkau Ponorogo, Madiun, hingga Ngawi",
-                                    desc: "Dengan pengalaman 20 tahun, kami memahami rute tercepat untuk memastikan telur tidak tertahan lama di perjalanan. Area Tulungagung, Trenggalek, dan sekitarnya tercover dalam hitungan jam.",
+                                    desc: "Dengan pengalaman lebih dari 25 tahun, kami memahami rute tercepat untuk memastikan telur tidak tertahan lama di perjalanan. Area Tulungagung, Trenggalek, dan sekitarnya tercover dalam hitungan jam.",
                                     stat: "99%",
                                     statLabel: "On-time Delivery"
                                 }

@@ -38,7 +38,7 @@ export const qualityItems = [
         title: 'Distribusi Tercepat',
         short: 'Menjangkau Ponorogo, Madiun, hingga Ngawi',
         detail:
-            'Dengan pengalaman 20 tahun, kami memahami rute tercepat untuk memastikan telur tidak tertahan lama di perjalanan. Area Tulungagung, Trenggalek, dan sekitarnya tercover dalam hitungan jam.',
+            'Dengan pengalaman lebih dari 25 tahun, kami memahami rute tercepat untuk memastikan telur tidak tertahan lama di perjalanan. Area Tulungagung, Trenggalek, dan sekitarnya tercover dalam hitungan jam.',
         stat: 99,
         statLabel: 'On-time delivery',
     },

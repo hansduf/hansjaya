@@ -295,7 +295,7 @@ Terima kasih.`;
                             Kualitas & <span className="text-[#E8A020]">Harga Telur</span> Terbaik Hari Ini.
                         </h1>
                         <p className="text-lg md:text-xl text-white/80 font-light mb-10 leading-relaxed max-w-xl">
-                            Mitra distribusi telur terpercaya di Ponorogo & Sekitarnya selama lebih dari 20 tahun. Menyuplai kebutuhan harian restoran, grosir, hingga industri pangan.
+                            Mitra distribusi telur terpercaya di Ponorogo & Sekitarnya selama lebih dari 25 tahun. Menyuplai kebutuhan harian restoran, grosir, hingga industri pangan.
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <a href="#contact" className="bg-gradient-to-br from-[#E8A020]/80 to-[#C47A1E]/60 backdrop-blur-xl hover:from-[#E8A020] hover:to-[#C47A1E] text-white px-8 py-4 rounded-full font-bold transition-all flex items-center gap-2 shadow-2xl border border-white/40 ring-1 ring-white/10">
@@ -319,10 +319,10 @@ Terima kasih.`;
                     <div className="lg:col-span-4 relative z-20 reveal-up">
                         <h2 className="text-[#E8A020] font-bold tracking-wider uppercase text-sm mb-3">Tentang & Jaringan</h2>
                         <h3 className="font-serif text-4xl lg:text-5xl font-bold mb-6 text-[#2C1A00] leading-tight">
-                            Dua Dekade Menjaga <span className="text-[#E8A020]">Kualitas</span>.
+                            Berdedikasi Sejak 1999 Menjaga <span className="text-[#E8A020]">Kualitas</span>.
                         </h3>
                         <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                            Berpusat di Ponorogo, Hans Jaya telah mendedikasikan diri selama lebih dari 20 tahun untuk menyalurkan telur segar langsung dari kandang. Jaringan kami kini menjangkau Madiun, Ngawi, Tulungagung, Trenggalek, hingga Purwantoro dengan integritas tinggi.
+                            Berpusat di Ponorogo, Hans Jaya telah mendedikasikan diri selama lebih dari 25 tahun untuk menyalurkan telur segar langsung dari kandang. Jaringan kami kini menjangkau Madiun, Ngawi, Tulungagung, Trenggalek, hingga Purwantoro dengan integritas tinggi.
                         </p>
                         
                         <div className="grid grid-cols-2 gap-4 mb-8">
@@ -330,7 +330,7 @@ Terima kasih.`;
                                 { label: 'Mitra Klien', value: '500+', icon: Store },
                                 { label: 'Ton/Bulan', value: '120+', icon: Package },
                                 { label: 'Wilayah Jangkauan', value: 'Ponorogo+', icon: MapPin },
-                                { label: 'Tahun Pengalaman', value: '20+', icon: Clock }
+                                { label: 'Tahun Pengalaman', value: '25+', icon: Clock }
                             ].map((stat, i) => (
                                 <div key={i} className="bg-white p-5 rounded-2xl border border-[#E8A020]/10 shadow-sm hover:shadow-xl transition-shadow group">
                                     <stat.icon className="text-[#E8A020] mb-3 group-hover:scale-110 transition-transform" size={24} />
