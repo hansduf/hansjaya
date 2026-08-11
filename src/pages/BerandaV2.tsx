@@ -437,36 +437,30 @@ export default function BerandaV2() {
 
                                 {/* Table Rows */}
                                 {[...eggPrices].sort((a, b) => {
-                                    const order = ['TELUR AYAM RAS', 'TELUR AYAM KAMPUNG', 'TELUR PUYUH', 'TELUR ASIN', 'TELUR BEBEK', 'TELUR OMEGA 3'];
+                                    const order = ['TELUR AYAM', 'TELUR AYAM RAS', 'TELUR AYAM KAMPUNG', 'TELUR PUYUH', 'TELUR ASIN', 'TELUR BEBEK', 'TELUR OMEGA 3', 'TELUR OMEGA'];
                                     const idxA = order.indexOf(a.type_name.toUpperCase());
                                     const idxB = order.indexOf(b.type_name.toUpperCase());
                                     return (idxA !== -1 ? idxA : 99) - (idxB !== -1 ? idxB : 99);
                                 }).map((item) => {
-                                    const diff = item.current_price - item.previous_price;
+                                    const prev = item.previous_price || item.current_price;
+                                    const diff = item.current_price - prev;
                                     const isUp = diff > 0;
                                     const isDown = diff < 0;
-                                    // Partner price from Supabase with automatic fallback if not set
-                                    const partnerPrice = item.partner_price || (item.current_price - 1500);
 
                                     return (
                                         <div key={item.id} className="grid grid-cols-12 p-4 md:p-5 items-center hover:bg-[#FF3300] hover:text-white transition-colors group border-b border-[#1A1A1A] last:border-b-0">
                                             <div className="col-span-5 font-bold uppercase tracking-wide text-xs md:text-sm">
                                                 {item.type_name}
                                             </div>
-                                            {/* Column Harga: Slashed General Price & Bold Partner Price */}
+                                            {/* Column Harga: Clean Main Price with UPDATE PASAR badge */}
                                             <div className="col-span-4 text-right flex flex-col justify-center items-end">
-                                                {/* Harga Umum (Dicoret - Berwarna Merah & Miring) */}
-                                                <span className="text-[10px] md:text-xs text-[#FF3300] group-hover:text-white/60 line-through font-mono font-bold italic tracking-tight transition-colors">
-                                                    {formatRupiah(item.current_price)}
-                                                </span>
-                                                {/* Harga Kemitraan */}
-                                                <div className="flex items-center justify-end gap-1.5 mt-0.5">
+                                                <div className="flex items-center justify-end gap-1.5">
                                                     {/* Badge Marketing Eksklusif - Miring/Slanted & Italic */}
                                                     <span className="bg-[#FFC300] text-[#1A1A1A] text-[7px] md:text-[8px] font-black italic -skew-x-6 px-1.5 py-0.5 uppercase tracking-wider border border-[#1A1A1A] shadow-[1px_1px_0px_#1A1A1A] group-hover:bg-white group-hover:text-[#FF3300] group-hover:border-white transition-all">
                                                         UPDATE PASAR
                                                     </span>
                                                     <span className="font-grotesk font-black italic text-lg md:text-2xl text-[#1A1A1A] group-hover:text-[#FFC300] transition-colors tracking-tighter leading-none">
-                                                        {formatRupiah(partnerPrice)}
+                                                        {formatRupiah(item.current_price)}
                                                     </span>
                                                 </div>
                                             </div>
