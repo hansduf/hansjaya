@@ -403,9 +403,16 @@ export default function BerandaV2() {
                         <div className="p-4 sm:p-5 overflow-y-auto max-h-[45vh] divide-y divide-[#1A1A1A]/20">
                             {eggPrices.length > 0 ? (
                                 [...eggPrices].sort((a, b) => {
-                                    const order = ['TELUR AYAM', 'TELUR AYAM RAS', 'TELUR AYAM KAMPUNG', 'TELUR PUYUH', 'TELUR ASIN', 'TELUR BEBEK', 'TELUR OMEGA 3', 'TELUR OMEGA'];
-                                    const idxA = order.indexOf(a.type_name.toUpperCase());
-                                    const idxB = order.indexOf(b.type_name.toUpperCase());
+                                    const order = [
+                                        'TELUR AYAM RAS', 'TELUR AYAM', 'AYAM RAS',
+                                        'TELUR PUYUH', 'PUYUH',
+                                        'TELUR AYAM KAMPUNG', 'AYAM KAMPUNG',
+                                        'TELUR BEBEK (MENTAH)', 'TELUR BEBEK', 'BEBEK (MENTAH)', 'BEBEK',
+                                        'TELUR ASIN', 'ASIN',
+                                        'TELUR OMEGA 3', 'TELUR OMEGA', 'OMEGA 3', 'OMEGA'
+                                    ];
+                                    const idxA = order.findIndex(o => a.type_name.toUpperCase().includes(o));
+                                    const idxB = order.findIndex(o => b.type_name.toUpperCase().includes(o));
                                     return (idxA !== -1 ? idxA : 99) - (idxB !== -1 ? idxB : 99);
                                 }).map((item) => {
                                     const prev = item.previous_price || item.current_price;
@@ -617,9 +624,16 @@ export default function BerandaV2() {
 
                                 {/* Table Rows */}
                                 {[...eggPrices].sort((a, b) => {
-                                    const order = ['TELUR AYAM', 'TELUR AYAM RAS', 'TELUR AYAM KAMPUNG', 'TELUR PUYUH', 'TELUR ASIN', 'TELUR BEBEK', 'TELUR OMEGA 3', 'TELUR OMEGA'];
-                                    const idxA = order.indexOf(a.type_name.toUpperCase());
-                                    const idxB = order.indexOf(b.type_name.toUpperCase());
+                                    const order = [
+                                        'TELUR AYAM RAS', 'TELUR AYAM', 'AYAM RAS',
+                                        'TELUR PUYUH', 'PUYUH',
+                                        'TELUR AYAM KAMPUNG', 'AYAM KAMPUNG',
+                                        'TELUR BEBEK (MENTAH)', 'TELUR BEBEK', 'BEBEK (MENTAH)', 'BEBEK',
+                                        'TELUR ASIN', 'ASIN',
+                                        'TELUR OMEGA 3', 'TELUR OMEGA', 'OMEGA 3', 'OMEGA'
+                                    ];
+                                    const idxA = order.findIndex(o => a.type_name.toUpperCase().includes(o));
+                                    const idxB = order.findIndex(o => b.type_name.toUpperCase().includes(o));
                                     return (idxA !== -1 ? idxA : 99) - (idxB !== -1 ? idxB : 99);
                                 }).map((item) => {
                                     const prev = item.previous_price || item.current_price;
