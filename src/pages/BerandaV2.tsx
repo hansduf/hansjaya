@@ -272,7 +272,7 @@ export default function BerandaV2() {
     useEffect(() => {
         const fetchPrices = async () => {
             // 1. Try fetching from Google Sheets CSV if URL provided
-            const sheetsUrl = import.meta.env.VITE_SHEETS_CSV_URL;
+            const sheetsUrl = import.meta.env.VITE_SHEETS_CSV_URL || 'https://docs.google.com/spreadsheets/d/1vw_tRSMH59toQFwJKFL-1sTV-dOsAYbSzYF8dImZVHI/export?format=csv';
             if (sheetsUrl && sheetsUrl.trim().length > 0) {
                 try {
                     const res = await fetch(sheetsUrl);
