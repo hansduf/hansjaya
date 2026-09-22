@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import {
     ArrowRight, CheckCircle, Package,
-    TrendingUp, TrendingDown, Minus, ShieldCheck, Leaf, Truck
+    TrendingUp, TrendingDown, Minus, ShieldCheck, Leaf, Truck, X
 } from 'lucide-react';
 import '../styles/berandaNeo.css';
 import Logo from '../components/Logo';
@@ -242,6 +242,7 @@ const NeoDistributionSVG = () => (
 export default function BerandaV2() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [eggPrices, setEggPrices] = useState<any[]>([]);
+    const [showPriceModal, setShowPriceModal] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchPrices = async () => {
@@ -285,6 +286,100 @@ export default function BerandaV2() {
 
     return (
         <div className="font-sans text-[#1A1A1A] bg-[#FAFAFA] min-h-screen selection:bg-[#FF3300] selection:text-white">
+
+            {/* POPUP MODAL HARGA LIVE (NEOBRUTALISM OPTION A) */}
+            {showPriceModal && (
+                <div className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-xs flex items-center justify-center p-4">
+                    <div className="bg-[#FAFAFA] border-4 border-[#1A1A1A] shadow-[8px_8px_0px_#FFC300] max-w-md w-full overflow-hidden flex flex-col relative max-h-[90vh]">
+                        {/* Header Modal */}
+                        <div className="bg-[#1A1A1A] text-[#FAFAFA] p-4 flex items-center justify-between border-b-2 border-[#1A1A1A]">
+                            <div className="flex items-center gap-2">
+                                <span className="w-2.5 h-2.5 rounded-full bg-[#FFC300] animate-pulse"></span>
+                                <span className="font-grotesk font-black text-xs md:text-sm uppercase tracking-wider text-[#FFC300]">
+                                    UPDATE HARGA TELUR HARI INI
+                                </span>
+                            </div>
+                            <button
+                                onClick={() => setShowPriceModal(false)}
+                                className="p-1 text-white/70 hover:text-white hover:bg-white/10 transition-colors font-bold rounded-none"
+                                aria-label="Tutup"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+
+                        {/* Status Sub-bar */}
+                        <div className="bg-[#FFC300] text-[#1A1A1A] px-4 py-2 text-[10px] font-mono font-bold uppercase tracking-widest flex items-center justify-between border-b border-[#1A1A1A]">
+                            <span>STATUS: AMAN & TERSEDIA</span>
+                            <span>PONOROGO</span>
+                        </div>
+
+                        {/* List Harga */}
+                        <div className="p-4 sm:p-5 overflow-y-auto max-h-[45vh] divide-y divide-[#1A1A1A]/20">
+                            {eggPrices.length > 0 ? (
+                                [...eggPrices].sort((a, b) => {
+                                    const order = ['TELUR AYAM', 'TELUR AYAM RAS', 'TELUR AYAM KAMPUNG', 'TELUR PUYUH', 'TELUR ASIN', 'TELUR BEBEK', 'TELUR OMEGA 3', 'TELUR OMEGA'];
+                                    const idxA = order.indexOf(a.type_name.toUpperCase());
+                                    const idxB = order.indexOf(b.type_name.toUpperCase());
+                                    return (idxA !== -1 ? idxA : 99) - (idxB !== -1 ? idxB : 99);
+                                }).map((item) => {
+                                    const prev = item.previous_price || item.current_price;
+                                    const diff = item.current_price - prev;
+                                    const isUp = diff > 0;
+                                    const isDown = diff < 0;
+
+                                    return (
+                                        <div key={item.id} className="py-3 flex items-center justify-between gap-2 first:pt-0 last:pb-0">
+                                            <div>
+                                                <h4 className="font-grotesk font-black text-sm uppercase tracking-tight text-[#1A1A1A]">
+                                                    {item.type_name}
+                                                </h4>
+                                                <span className="text-[9px] font-mono text-[#1A1A1A]/60 uppercase">HARGA PASAR TERKINI</span>
+                                            </div>
+                                            <div className="text-right flex items-center gap-2">
+                                                <span className="font-grotesk font-black text-lg text-[#1A1A1A]">
+                                                    {formatRupiah(item.current_price)}
+                                                </span>
+                                                <div className={`border px-1.5 py-0.5 text-[9px] font-mono font-bold flex items-center gap-0.5
+                                                    ${isUp ? 'border-red-500 text-red-600 bg-red-50' :
+                                                        isDown ? 'border-green-500 text-green-600 bg-green-50' :
+                                                            'border-gray-300 text-gray-500 bg-gray-50'}`}>
+                                                    {isUp && <TrendingUp className="w-2.5 h-2.5" />}
+                                                    {isDown && <TrendingDown className="w-2.5 h-2.5" />}
+                                                    {!isUp && !isDown && <Minus className="w-2.5 h-2.5" />}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <div className="py-8 text-center text-xs font-mono text-gray-500">
+                                    [ MEMUAT DATA HARGA LIVE... ]
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Footer Action Buttons */}
+                        <div className="p-4 bg-[#E8E8E8] border-t-2 border-[#1A1A1A] flex flex-col sm:flex-row gap-2">
+                            <a
+                                href="https://wa.me/628993179345?text=Halo%20Hans%20Jaya%2C%20saya%20ingin%20tanya%20harga%20dan%20stok%20telur%20hari%20ini"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex-1 p-3 bg-[#1A1A1A] text-[#FAFAFA] hover:bg-[#FFC300] hover:text-[#1A1A1A] font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 border border-[#1A1A1A]"
+                            >
+                                <span>Pesan via WA</span>
+                                <ArrowRight className="w-4 h-4" />
+                            </a>
+                            <button
+                                onClick={() => setShowPriceModal(false)}
+                                className="p-3 bg-white text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white font-bold text-xs uppercase tracking-wider transition-colors border border-[#1A1A1A]"
+                            >
+                                Lihat Website
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* NAVBAR - GRID STRICT */}
             <nav className="sticky top-0 z-50 bg-[#FAFAFA] border-b border-[#1A1A1A]">
