@@ -239,6 +239,31 @@ const NeoDistributionSVG = () => (
     </div>
 );
 
+const parseCSVNumber = (str: string): number => {
+    if (!str) return 0;
+    const cleaned = str.replace(/Rp\.?/gi, '').replace(/\./g, '').replace(/,/g, '').replace(/"/g, '').trim();
+    return parseInt(cleaned, 10) || 0;
+};
+
+const parseCSVLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+            inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+            result.push(current.trim());
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+    result.push(current.trim());
+    return result;
+};
+
 export default function BerandaV2() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [eggPrices, setEggPrices] = useState<any[]>([]);
@@ -246,8 +271,57 @@ export default function BerandaV2() {
 
     useEffect(() => {
         const fetchPrices = async () => {
+            // 1. Try fetching from Google Sheets CSV if URL provided
+            const sheetsUrl = import.meta.env.VITE_SHEETS_CSV_URL;
+            if (sheetsUrl && sheetsUrl.trim().length > 0) {
+                try {
+                    const res = await fetch(sheetsUrl);
+                    if (res.ok) {
+                        const text = await res.text();
+                        const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+                        const parsedItems: any[] = [];
+
+                        let startIdx = 0;
+                        for (let i = 0; i < lines.length; i++) {
+                            if (lines[i].toLowerCase().includes('jenis telur')) {
+                                startIdx = i + 1;
+                                break;
+                            }
+                        }
+
+                        for (let i = startIdx; i < lines.length; i++) {
+                            const cols = parseCSVLine(lines[i]);
+                            if (cols.length >= 2 && cols[1] && !cols[1].toLowerCase().includes('data harga')) {
+                                const rawTypeName = cols[1].trim();
+                                const typeName = rawTypeName.toUpperCase().startsWith('TELUR') ? rawTypeName : `TELUR ${rawTypeName.toUpperCase()}`;
+                                const satuan = cols[2] || 'Kg';
+                                const currentPrice = parseCSVNumber(cols[4] || cols[3] || '0');
+                                const previousPrice = parseCSVNumber(cols[6] || cols[4] || '0');
+                                const updatedDate = cols[0] || new Date().toISOString().split('T')[0];
+
+                                parsedItems.push({
+                                    id: `sheet-${i}`,
+                                    type_name: typeName,
+                                    satuan: satuan,
+                                    current_price: currentPrice,
+                                    previous_price: previousPrice,
+                                    updated_at: updatedDate
+                                });
+                            }
+                        }
+
+                        if (parsedItems.length > 0) {
+                            setEggPrices(parsedItems);
+                            return;
+                        }
+                    }
+                } catch (err) {
+                    console.error("Gagal membaca Google Sheets CSV:", err);
+                }
+            }
+
+            // 2. Try fetching from Supabase
             try {
-                // Defer loading Supabase client to speed up initial FCP
                 const { createClient } = await import('@supabase/supabase-js');
                 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://qartwfvhpcooiskaeufz.supabase.co';
                 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_opGXI5QjLL4iWN4G3-f5gA_Ycc9ddJK';
@@ -257,14 +331,25 @@ export default function BerandaV2() {
                     .from('egg_prices')
                     .select('*')
                     .order('type_name');
-                
-                if (error) throw error;
-                if (data) {
+
+                if (!error && data && data.length > 0) {
                     setEggPrices(data);
+                    return;
                 }
             } catch (error) {
                 console.error("Gagal mengambil data dari Supabase:", error);
             }
+
+            // 3. Fallback Dataset matching user spreadsheet format
+            const todayStr = new Date().toISOString().split('T')[0];
+            setEggPrices([
+                { id: '1', type_name: 'TELUR AYAM RAS', satuan: 'Kg', current_price: 22500, previous_price: 22950, updated_at: todayStr },
+                { id: '2', type_name: 'TELUR PUYUH', satuan: 'Kg', current_price: 31000, previous_price: 31000, updated_at: todayStr },
+                { id: '3', type_name: 'TELUR AYAM KAMPUNG', satuan: 'Butir', current_price: 2400, previous_price: 2400, updated_at: todayStr },
+                { id: '4', type_name: 'TELUR BEBEK (MENTAH)', satuan: 'Butir', current_price: 2400, previous_price: 2400, updated_at: todayStr },
+                { id: '5', type_name: 'TELUR ASIN', satuan: 'Butir', current_price: 3100, previous_price: 3100, updated_at: todayStr },
+                { id: '6', type_name: 'TELUR OMEGA 3', satuan: 'Kg', current_price: 27000, previous_price: 27000, updated_at: todayStr },
+            ]);
         };
         fetchPrices();
     }, []);
