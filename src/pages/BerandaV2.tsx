@@ -301,10 +301,10 @@ export default function BerandaV2() {
                             </div>
                             <button
                                 onClick={() => setShowPriceModal(false)}
-                                className="p-1 text-white/70 hover:text-white hover:bg-white/10 transition-colors font-bold rounded-none"
+                                className="p-1 bg-[#FF3300] text-white hover:bg-white hover:text-[#FF3300] transition-colors font-bold rounded-none border border-[#1A1A1A]"
                                 aria-label="Tutup"
                             >
-                                <X className="w-5 h-5" />
+                                <X className="w-5 h-5 stroke-[3]" />
                             </button>
                         </div>
 
